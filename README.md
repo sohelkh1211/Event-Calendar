@@ -8,8 +8,9 @@ An interactive Event Calendar web application built using ReactJS and Vite, wher
 - [✨ Features](#-features)
 - [🖼️ Demo](#%EF%B8%8F-demo)
 - [⚙️ Installation](#%EF%B8%8F-demo)
-- [🚀 Usage]()
-- [🛠️ Technologies Used]()
+- [🚀 Usage](#-usage)
+- [🛠️ Technologies Used](#%EF%B8%8F-technologies-used)
+- [👨‍💻 Author](#-author)
 
 ## 📖 Project Overview
 
