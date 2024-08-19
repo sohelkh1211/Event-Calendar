@@ -17,6 +17,7 @@ const EventCalendar = () => {
   // For Displaying Dialog Boxes
   const [visible, setVisible] = useState(false);
   const [eventVisible, setEventVisible] = useState(false);
+  const [removeVisible, setRemoveVisible] = useState(false);
 
   const { events, setEvents } = useContext(GlobalContext);
 
@@ -44,7 +45,10 @@ const EventCalendar = () => {
   ]
 
   // For Displaying Events
-  const [selectedEvent, setSelectedEvent] = useState();
+  const [selectedEvent, setSelectedEvent] = useState({});
+  const [selectedEventIndex, setSelectedEventIndex] = useState(-1);
+
+  // To enable or disable editing
   const [disable, setDisable] = useState(true);
 
   const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -59,6 +63,7 @@ const EventCalendar = () => {
 
   const startingDayIndex = getDay(firstDayOfMonth);
 
+  // Function to save new event
   const handleSave = (e) => {
     e.preventDefault();
     if (!title || !time.from || !time.to || !selectedTag) {
@@ -72,15 +77,59 @@ const EventCalendar = () => {
         date: selected_date.date,
         from: time.from,
         to: time.to,
-        tag: selectedTag.name
+        tag: selectedTag
       }
     ]);
+    toast.success("Event Saved");
     setVisible(!visible);
 
     setTitle('');
     setSelectedTag('');
     setSelected_date({ "index": "", "date": "" });
     setTime({ "from": "", "to": "" });
+  }
+  // console.log(selectedEvent);
+
+  // Function to Edit selected Event details
+  const handleEventEdit = (e) => {
+    e.preventDefault();
+    if(!selectedEvent.title || !selectedEvent.date || !selectedEvent.from || !selectedEvent.to || !selectedEvent.tag) {
+      toast.error("Please fill all the details");
+      return;
+    }
+
+    setEvents(events.map((event, id) => {
+      if(event.date === selectedEvent.date) {
+        return selectedEvent;
+      }
+      return event;
+    }));
+    toast.success("Event Updated");
+
+    setEventVisible(!eventVisible);
+    setDisable(true);
+
+    setSelectedEvent({});
+  }
+
+  // Function to remove selected event
+  const handleRemove = () => {
+    events.splice(selectedEventIndex,1);
+    setEvents(events);
+
+    toast.success(`${selectedEvent?.title || ''} Event Deleted`);
+
+    setSelectedEventIndex(-1);
+
+    // Close Remove Visible Dialog Box
+    setRemoveVisible(false);
+
+    setDisable(true);
+
+    // Close Event Details Dialog Box
+    setEventVisible(false);
+
+    setSelectedEvent({});
   }
 
   return (
@@ -108,8 +157,8 @@ const EventCalendar = () => {
             {/* For displaying events on that day */}
             <div className={`flex flex-col gap-y-1 w-full overflow-y-scroll`}>
               {events.map((event, event_index) => (
-                <div key={`event_${event_index}`} className={`${format(day, "dd-MM-yyyy") === format(event.date, "dd-MM-yyyy") ? 'flex' : 'hidden'} z-10 bg-cyan-300 justify-center rounded-sm border hover:border-black overflow-clip`} onClick={(e) => { e.stopPropagation(); setSelectedEvent(event); setEventVisible(!eventVisible);  }}>
-                  <p className="">{event.title}</p>
+                <div key={`event_${event_index}`} className={`${format(day, "dd-MM-yyyy") === format(event.date, "dd-MM-yyyy") ? 'flex' : 'hidden'} p-0 z-10 bg-cyan-300 justify-center rounded-sm border hover:border-black overflow-clip`} onClick={(e) => { e.stopPropagation(); setSelectedEvent(event); setSelectedEventIndex(event_index); setEventVisible(!eventVisible); }}>
+                  <p className="md:text-[16px] sm:text-[14px] xs:text-[12px]">{event.title}</p>
                 </div>
               ))}
             </div>
@@ -117,7 +166,8 @@ const EventCalendar = () => {
         ))}
       </div>
 
-      <Dialog header="Add Event" visible={visible} onHide={() => { setVisible(!visible); setTitle(''); setSelectedTag(''); setSelected_date({ "index": "", "date": "" }); setTime({ "from": "", "to": "" }); }} style={{ width: '30vw' }}  >
+      {/* For Adding New Event */}
+      <Dialog header="Add Event" visible={visible} onHide={() => { setVisible(!visible); setTitle(''); setSelectedTag(''); setSelected_date({ "index": "", "date": "" }); setTime({ "from": "", "to": "" }); }} className="add-edit-event-dialog"  >
         <div className="flex flex-col gap-y-2 mb-5">
           {/* Event Title */}
           <p className="font-bold">Event Title</p>
@@ -144,31 +194,47 @@ const EventCalendar = () => {
         </div>
       </Dialog>
 
-      <Dialog header="Event details" visible={eventVisible} onHide={() => setEventVisible(!eventVisible)} style={{ width: '30vw' }}>
-          <div className="flex flex-col gap-y-2 mb-5">
-            {/* Event Title */}
-            <p className="font-bold">Event Title</p>
-            <input disabled={disable} type="text" placeholder="Event Title" value={ selectedEvent ? selectedEvent.title : '' } onChange={(e) => setTitle(e.target.value)} className="outline-none px-2 py-0.5 caret-slate-400 rounded-md border border-black" />
+      {/* For updating selected Event */}
+      <Dialog header="Event details" visible={eventVisible} onHide={() => { setEventVisible(!eventVisible); setDisable(true); }} className="add-edit-event-dialog">
+        <div className="flex flex-col gap-y-2 mb-5">
+          {/* Event Title */}
+          <p className="font-bold">Event Title</p>
+          <input disabled={disable} type="text" placeholder="Event Title" value={ selectedEvent?.title || ''} onChange={(e) => setSelectedEvent({ ...selectedEvent, title: e.target.value })} className="outline-none px-2 py-0.5 caret-slate-400 rounded-md border border-black" />
 
-            {/* Event Date */}
-            <p className="font-bold">Event Date</p>
-            <Calendar value={ selectedEvent ? selectedEvent.date : '' } disabled={disable} dateFormat="dd-mm-yy" className="outline-none px-2 py-0.5 rounded-md border border-black" />
+          {/* Event Date */}
+          <p className="font-bold">Event Date</p>
+          <Calendar value={ selectedEvent?.date || ''} disabled={true} dateFormat="dd-mm-yy" className="outline-none px-2 py-0.5 rounded-md border border-black" />
 
-            {/* From Time */}
-            <p className="font-bold">From</p>
-            <Calendar value={ selectedEvent ? selectedEvent.from : '' } disabled={disable} onChange={(e) => setTime({ ...time, "from": e.target.value })} timeOnly showTime hourFormat="12" className="outline-none px-2 py-0.5 rounded-md border border-black" />
+          {/* From Time */}
+          <p className="font-bold">From</p>
+          <Calendar value={ selectedEvent?.from || ''} disabled={disable} onChange={(e) => setSelectedEvent({ ...selectedEvent, from: e.target.value })} timeOnly showTime hourFormat="12" className="outline-none px-2 py-0.5 rounded-md border border-black" />
 
-            {/* To Time */}
-            <p className="font-bold">To</p>
-            <Calendar value={ selectedEvent ? selectedEvent.to : '' } disabled={disable} onChange={(e) => setTime({ ...time, "to": e.target.value })} timeOnly showTime hourFormat="12" className="outline-none px-2 py-0.5 rounded-md border border-black" />
+          {/* To Time */}
+          <p className="font-bold">To</p>
+          <Calendar value={ selectedEvent?.to || ''} disabled={disable} onChange={(e) => setSelectedEvent({ ...selectedEvent, to: e.target.value })} timeOnly showTime hourFormat="12" className="outline-none px-2 py-0.5 rounded-md border border-black" />
 
-            {/* Tags */}
-            <p className="font-bold">Tag</p>
-            <Dropdown value={ selectedEvent ? selectedEvent.tag : '' } disabled={disable} onChange={(e) => setSelectedTag(e.target.value)} options={tags} optionLabel="name" placeholder="Select a tag" className="outline-none caret-slate-400 px-2 py-0.5 rounded-md border border-black" />
-            {/* <input type="text" placeholder="E.g :- Work, Personal, Meet etc" className="outline-none caret-slate-400 px-2 py-0.5 rounded-md border border-black" /> */}
+          {/* Tags */}
+          <p className="font-bold">Tag</p>
+          <Dropdown value={ selectedEvent?.tag || ''} disabled={disable} onChange={(e) => setSelectedEvent({ ...selectedEvent, tag: e.target.value })} options={tags} optionLabel="name" placeholder="Select a tag" className="outline-none caret-slate-400 px-2 py-0.5 rounded-md border border-black" />
+          {/* <input type="text" placeholder="E.g :- Work, Personal, Meet etc" className="outline-none caret-slate-400 px-2 py-0.5 rounded-md border border-black" /> */}
 
-            <button className="mt-4 px-2 py-0.5 bg-emerald-400 text-gray-700 rounded-md border w-fit mx-auto" onClick={() => {}}>Edit</button>
+          <div className="flex gap-x-4 mx-auto">
+            <button className={`${ !disable ? 'hidden' : '' } mt-4 px-2 py-0.5 bg-emerald-400 text-gray-700 rounded-md border w-fit`} onClick={() => setDisable(false)}>Edit</button>
+            <button className={`${ disable ? 'hidden' : '' } mt-4 px-2 py-0.5 bg-emerald-400 text-gray-700 rounded-md border w-fit`} onClick={handleEventEdit}>Save</button>
+            <button className={`${ disable ? 'hidden' : '' } mt-4 px-2 py-0.5 bg-red-500 text-black rounded-md border w-fit`} onClick={() => setRemoveVisible(true)}>Remove</button>
           </div>
+        </div>
+      </Dialog>
+
+      {/* To ask user whether to remove event or not */}
+      <Dialog header="" visible={removeVisible} onHide={() => setRemoveVisible(false)} className="remove-event-dialog">
+        <div className="flex flex-col gap-y-2 mb-4">
+          <p className="text-gray-800 font-bold">Are you sure you want to delete { selectedEvent?.title || '' } event?</p>
+          <div className="flex flex-row gap-x-4 mx-auto">
+            <button className="px-2 py-0.5 rounded-md bg-red-500 text-black" onClick={handleRemove}>Yes</button>
+            <button className="px-2 py-0.5 rounded-md bg-emerald-500 text-black" onClick={() => setRemoveVisible(false)}>No</button>
+          </div>
+        </div>
       </Dialog>
     </div>
   )

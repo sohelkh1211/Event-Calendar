@@ -26,3 +26,45 @@
 .p-dialog-content {
   padding: 0 10px;
 }
+
+
+@media (min-width: 1024px) {
+  .add-edit-event-dialog {
+    width: 35vw
+  }
+
+  .remove-event-dialog {
+    width: 30vw
+  }
+}
+
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .add-edit-event-dialog {
+    width: 45vw;
+  }
+
+  .remove-event-dialog {
+    width: 40vw
+  }
+}
+
+@media (min-width: 640px) and (max-width: 768px) {
+  .add-edit-event-dialog {
+    width: 50vw;
+  }
+
+  .remove-event-dialog {
+    width: 40vw
+  }
+}
+
+@media (min-width: 0px) and (max-width: 640px) {
+  .add-edit-event-dialog {
+    width: 70vw;
+  }
+
+  .remove-event-dialog {
+    width: 60vw
+  }
+}
