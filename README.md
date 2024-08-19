@@ -30,6 +30,7 @@ You can view a live demo of the project [here]().
 ## ⚙️ Installation
 
 To run this project locally, follow these steps:
+
 **1. Clone the repository.**
    ```
    
