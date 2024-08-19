@@ -1,8 +1,29 @@
-# React + Vite
+# 🗓️ Event Calendar Web App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive Event Calendar web application built using ReactJS and Vite, where users can add, edit, and remove events for specific dates. This project was developed as a part of a task given by Grey Scientific Labs for a Front-end Development position.
 
-Currently, two official plugins are available:
+## 📋 Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [📖 Project Overview](#-project-overview)
+- [✨ Features](#-features)
+- [🖼️ Demo](-demo)
+- [⚙️ Installation](-installation)
+- [🚀 Usage]()
+- [🛠️ Technologies Used]()
+- [📜 License]()
+
+## 📖 Project Overview
+
+The Event Calendar Web App is designed to allow users to manage events on a calendar interface. Users can select a date, add an event with details such as title, start time, end time, and tag, edit event details, or remove events entirely.
+
+## ✨ Features
+
+- **Add Events:** Easily add events by selecting a date and providing event details.
+- **Edit Events:** Modify existing event details.
+- **Delete Events:** Remove events from the calendar.
+- **Responsive Design:** Fully responsive and adapts to different screen sizes.
+
+## 🖼️ Demo
+
+You can view a live demo of the project [here]().
+
