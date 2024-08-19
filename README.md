@@ -7,10 +7,9 @@ An interactive Event Calendar web application built using ReactJS and Vite, wher
 - [📖 Project Overview](#-project-overview)
 - [✨ Features](#-features)
 - [🖼️ Demo](#%EF%B8%8F-demo)
-- [⚙️ Installation](-installation)
+- [⚙️ Installation](#%EF%B8%8F-demo)
 - [🚀 Usage]()
 - [🛠️ Technologies Used]()
-- [📜 License]()
 
 ## 📖 Project Overview
 
@@ -49,3 +48,23 @@ To run this project locally, follow these steps:
    ```
 **5. Open your browser and navigate to http://localhost:5173.**
 
+## 🚀 Usage
+
+- Click on any date on the calendar to add an event.
+- Provide the event title, start time, end time, and tag.
+- Save the event to have it displayed on the calendar.
+- Click on an existing event to edit or delete it.
+
+## 🛠️ Technologies Used
+
+- **ReactJS**: A JavaScript library for building user interfaces.
+- **Vite**: A fast and opinionated web development build tool.
+- **Tailwind CSS** - A utility-first CSS framework for styling
+- **JavaScript (ES6+)** - For functionality and logic implementation.
+- **context API**: For global state management.
+
+## 👨‍💻 Author
+
+- Mohammed Sohel Khan
+  1. [LinkedIn](https://www.linkedin.com/in/mohammed-sohel-khan-452479259/)
+  2. [Github](https://github.com/sohelkh1211)
