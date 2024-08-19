@@ -33,5 +33,19 @@ To run this project locally, follow these steps:
 
 **1. Clone the repository.**
    ```
-   
+   https://github.com/sohelkh1211/Event-Calendar.git
    ```
+**2. Navigate to the project directory.**
+   ```
+   cd Event-Calendar
+   ```
+**3. Install the dependencies.**
+   ```
+   npm install --legacy-peer-deps
+   ```
+**4. Run the development server.**
+   ```
+   npm run dev
+   ```
+**5. Open your browser and navigate to http://localhost:5173.**
+
