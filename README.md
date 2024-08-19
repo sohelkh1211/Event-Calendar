@@ -6,7 +6,7 @@ An interactive Event Calendar web application built using ReactJS and Vite, wher
 
 - [📖 Project Overview](#-project-overview)
 - [✨ Features](#-features)
-- [🖼️ Demo](-demo)
+- [🖼️ Demo](#%EF%B8%8F-demo)
 - [⚙️ Installation](-installation)
 - [🚀 Usage]()
 - [🛠️ Technologies Used]()
