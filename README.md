@@ -14,7 +14,7 @@ An interactive Event Calendar web application built using ReactJS and Vite, wher
 
 ## 📖 Project Overview
 
-The Event Calendar Web App is designed to allow users to manage events on a calendar interface. Users can select a date, add an event with details such as title, start time, end time, and tag, edit event details, or remove events entirely.
+The Event Calendar Web App is designed to allow users to manage events on a monthly calendar interface. Users can select a date, add an event with details such as title, start time, end time, and tag, edit event details, or remove specific event entirely.
 
 ## ✨ Features
 
@@ -27,3 +27,10 @@ The Event Calendar Web App is designed to allow users to manage events on a cale
 
 You can view a live demo of the project [here]().
 
+## ⚙️ Installation
+
+To run this project locally, follow these steps:
+1. Clone the repository.
+   ```
+   
+   ```
