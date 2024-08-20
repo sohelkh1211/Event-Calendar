@@ -25,7 +25,7 @@ The Event Calendar Web App is designed to allow users to manage events on a mont
 
 ## 🖼️ Demo
 
-You can view a live demo of the project [here]().
+You can view a live demo of the project [here](https://event-calendar1.netlify.app/).
 
 ## ⚙️ Installation
 
